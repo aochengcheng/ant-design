@@ -4,6 +4,7 @@ category: Components
 title: Result
 cols: 1
 subtitle: 结果
+cover: https://gw.alipayobjects.com/zos/alicdn/9nepwjaLa/Result.svg
 ---
 
 用于反馈一系列操作任务的处理结果。
@@ -14,10 +15,10 @@ subtitle: 结果
 
 ## API
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| title | title 文字 | ReactNode | - | 3.20.0 |
-| subTitle | subTitle 文字 | ReactNode | - | 3.20.0 |
-| status | 结果的状态,决定图标和颜色 | `'success' | 'error' | 'info' | 'warning'| '404' | '403' | '500'` | 'info' | 3.20.0 |
-| icon | 自定义 icon | string \| ReactNode | - | 3.20.0 |
-| extra | 操作区 | ReactNode | - | 3.20.0 |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| extra | 操作区 | ReactNode | - |
+| icon | 自定义 icon | ReactNode | - |
+| status | 结果的状态，决定图标和颜色 | `success` \| `error` \| `info` \| `warning` \| `404` \| `403` \| `500` | `info` |
+| subTitle | subTitle 文字 | ReactNode | - |
+| title | title 文字 | ReactNode | - |

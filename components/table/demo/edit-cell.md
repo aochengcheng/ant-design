@@ -1,5 +1,5 @@
 ---
-order: 22
+order: 23
 title:
   en-US: Editable Cells
   zh-CN: 可编辑单元格
@@ -13,97 +13,127 @@ title:
 
 Table with editable cells.
 
-```jsx
+```tsx
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 
-const EditableContext = React.createContext();
+const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
-const EditableRow = ({ form, index, ...props }) => (
-  <EditableContext.Provider value={form}>
-    <tr {...props} />
-  </EditableContext.Provider>
-);
+interface Item {
+  key: string;
+  name: string;
+  age: string;
+  address: string;
+}
 
-const EditableFormRow = Form.create()(EditableRow);
+interface EditableRowProps {
+  index: number;
+}
 
-class EditableCell extends React.Component {
-  state = {
-    editing: false,
+const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
+  const [form] = Form.useForm();
+  return (
+    <Form form={form} component={false}>
+      <EditableContext.Provider value={form}>
+        <tr {...props} />
+      </EditableContext.Provider>
+    </Form>
+  );
+};
+
+interface EditableCellProps {
+  title: React.ReactNode;
+  editable: boolean;
+  children: React.ReactNode;
+  dataIndex: keyof Item;
+  record: Item;
+  handleSave: (record: Item) => void;
+}
+
+const EditableCell: React.FC<EditableCellProps> = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
+  const [editing, setEditing] = useState(false);
+  const inputRef = useRef<Input>(null);
+  const form = useContext(EditableContext)!;
+
+  useEffect(() => {
+    if (editing) {
+      inputRef.current!.focus();
+    }
+  }, [editing]);
+
+  const toggleEdit = () => {
+    setEditing(!editing);
+    form.setFieldsValue({ [dataIndex]: record[dataIndex] });
   };
 
-  toggleEdit = () => {
-    const editing = !this.state.editing;
-    this.setState({ editing }, () => {
-      if (editing) {
-        this.input.focus();
-      }
-    });
-  };
+  const save = async () => {
+    try {
+      const values = await form.validateFields();
 
-  save = e => {
-    const { record, handleSave } = this.props;
-    this.form.validateFields((error, values) => {
-      if (error && error[e.currentTarget.id]) {
-        return;
-      }
-      this.toggleEdit();
+      toggleEdit();
       handleSave({ ...record, ...values });
-    });
+    } catch (errInfo) {
+      console.log('Save failed:', errInfo);
+    }
   };
 
-  renderCell = form => {
-    this.form = form;
-    const { children, dataIndex, record, title } = this.props;
-    const { editing } = this.state;
-    return editing ? (
-      <Form.Item style={{ margin: 0 }}>
-        {form.getFieldDecorator(dataIndex, {
-          rules: [
-            {
-              required: true,
-              message: `${title} is required.`,
-            },
-          ],
-          initialValue: record[dataIndex],
-        })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
+  let childNode = children;
+
+  if (editable) {
+    childNode = editing ? (
+      <Form.Item
+        style={{ margin: 0 }}
+        name={dataIndex}
+        rules={[
+          {
+            required: true,
+            message: `${title} is required.`,
+          },
+        ]}
+      >
+        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
       </Form.Item>
     ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{ paddingRight: 24 }}
-        onClick={this.toggleEdit}
-      >
+      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
         {children}
       </div>
     );
-  };
-
-  render() {
-    const {
-      editable,
-      dataIndex,
-      title,
-      record,
-      index,
-      handleSave,
-      children,
-      ...restProps
-    } = this.props;
-    return (
-      <td {...restProps}>
-        {editable ? (
-          <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
-        ) : (
-          children
-        )}
-      </td>
-    );
   }
+
+  return <td {...restProps}>{childNode}</td>;
+};
+
+type EditableTableProps = Parameters<typeof Table>[0];
+
+interface DataType {
+  key: React.Key;
+  name: string;
+  age: string;
+  address: string;
 }
 
-class EditableTable extends React.Component {
-  constructor(props) {
+interface EditableTableState {
+  dataSource: DataType[];
+  count: number;
+}
+
+type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
+
+class EditableTable extends React.Component<EditableTableProps, EditableTableState> {
+  columns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[];
+
+  constructor(props: EditableTableProps) {
     super(props);
+
     this.columns = [
       {
         title: 'name',
@@ -122,7 +152,7 @@ class EditableTable extends React.Component {
       {
         title: 'operation',
         dataIndex: 'operation',
-        render: (text, record) =>
+        render: (_, record: { key: React.Key }) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a>Delete</a>
@@ -150,17 +180,17 @@ class EditableTable extends React.Component {
     };
   }
 
-  handleDelete = key => {
+  handleDelete = (key: React.Key) => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
 
   handleAdd = () => {
     const { count, dataSource } = this.state;
-    const newData = {
+    const newData: DataType = {
       key: count,
       name: `Edward King ${count}`,
-      age: 32,
+      age: '32',
       address: `London, Park Lane no. ${count}`,
     };
     this.setState({
@@ -169,7 +199,7 @@ class EditableTable extends React.Component {
     });
   };
 
-  handleSave = row => {
+  handleSave = (row: DataType) => {
     const newData = [...this.state.dataSource];
     const index = newData.findIndex(item => row.key === item.key);
     const item = newData[index];
@@ -184,7 +214,7 @@ class EditableTable extends React.Component {
     const { dataSource } = this.state;
     const components = {
       body: {
-        row: EditableFormRow,
+        row: EditableRow,
         cell: EditableCell,
       },
     };
@@ -194,7 +224,7 @@ class EditableTable extends React.Component {
       }
       return {
         ...col,
-        onCell: record => ({
+        onCell: (record: DataType) => ({
           record,
           editable: col.editable,
           dataIndex: col.dataIndex,
@@ -213,7 +243,7 @@ class EditableTable extends React.Component {
           rowClassName={() => 'editable-row'}
           bordered
           dataSource={dataSource}
-          columns={columns}
+          columns={columns as ColumnTypes}
         />
       </div>
     );
@@ -234,8 +264,12 @@ ReactDOM.render(<EditableTable />, mountNode);
 }
 
 .editable-row:hover .editable-cell-value-wrap {
+  padding: 4px 11px;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
-  padding: 4px 11px;
+}
+
+[data-theme='dark'] .editable-row:hover .editable-cell-value-wrap {
+  border: 1px solid #434343;
 }
 ```

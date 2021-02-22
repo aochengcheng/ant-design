@@ -33,18 +33,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          height: 200,
-          overflow: 'hidden',
-          position: 'relative',
-          border: '1px solid #ebedf0',
-          borderRadius: 2,
-          padding: 48,
-          textAlign: 'center',
-          background: '#fafafa',
-        }}
-      >
+      <div className="site-drawer-render-in-current-wrapper">
         Render in this
         <div style={{ marginTop: 16 }}>
           <Button type="primary" onClick={this.showDrawer}>
@@ -69,3 +58,23 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, mountNode);
 ```
+
+```css
+.site-drawer-render-in-current-wrapper {
+  position: relative;
+  height: 200px;
+  padding: 48px;
+  overflow: hidden;
+  text-align: center;
+  background: #fafafa;
+  border: 1px solid #ebedf0;
+  border-radius: 2px;
+}
+```
+
+<style>
+[data-theme="dark"] .site-drawer-render-in-current-wrapper {
+  background: #000;
+  border: 1px solid #303030;
+}
+</style>

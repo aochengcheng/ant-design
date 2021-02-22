@@ -3,7 +3,7 @@ type: Feedback
 category: Components
 title: Result
 cols: 1
-subtitle:
+cover: https://gw.alipayobjects.com/zos/alicdn/9nepwjaLa/Result.svg
 ---
 
 Used to feed back the results of a series of operational tasks.
@@ -14,10 +14,10 @@ Use when important operations need to inform the user to process the results and
 
 ## API
 
-| Property | Description | Type | Default | Version |
-| --- | --- | --- | --- | --- |
-| title | title string | ReactNode | - | 3.20.0 |
-| subTitle | subTitle string | ReactNode | - | 3.20.0 |
-| status | result status,decide icons and colors | `'success' | 'error' | 'info' | 'warning'| '404' | '403' | '500'` | 'info' | 3.20.0 |
-| icon | custom back icon | string \| ReactNode | - | 3.20.0 |
-| extra | operating area | ReactNode | - | 3.20.0 |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| extra | Operating area | ReactNode | - |
+| icon | Custom back icon | ReactNode | - |
+| status | Result status, decide icons and colors | `success` \| `error` \| `info` \| `warning` \| `404` \| `403` \| `500` | `info` |
+| subTitle | The subTitle | ReactNode | - |
+| title | The title | ReactNode | - |

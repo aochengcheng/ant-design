@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import Mentions from '..';
 import focusTest from '../../../tests/shared/focusTest';
 import mountTest from '../../../tests/shared/mountTest';
+import rtlTest from '../../../tests/shared/rtlTest';
 
 const { getMentions } = Mentions;
 
@@ -73,8 +74,9 @@ describe('Mentions', () => {
     expect(onBlur).toHaveBeenCalled();
   });
 
-  focusTest(Mentions);
+  focusTest(Mentions, { refFocus: true });
   mountTest(Mentions);
+  rtlTest(Mentions);
 
   it('loading', () => {
     const wrapper = mount(<Mentions loading />);

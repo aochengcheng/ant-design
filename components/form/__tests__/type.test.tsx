@@ -1,98 +1,86 @@
-/* tslint:disable */
-/* eslint-disable */
 import * as React from 'react';
-import Form, { FormComponentProps, FormCreateOption } from '../Form';
+import Form, { FormInstance } from '..';
+import Input from '../../input';
 
-describe('Form TypeScript test', async () => {
-  it('empty test case placeholder to avoid jest error', () => {
-    // empty
+interface FormValues {
+  username?: string;
+  path1?: { path2?: number };
+}
+
+describe('Form.typescript', () => {
+  it('Form.Item', () => {
+    const form = (
+      <Form>
+        <Form.Item name="test">
+          <Input />
+        </Form.Item>
+      </Form>
+    );
+
+    expect(form).toBeTruthy();
+  });
+
+  describe('generic', () => {
+    it('hooks', () => {
+      const Demo = () => {
+        const [form] = Form.useForm<FormValues>();
+
+        form.setFieldsValue({ path1: { path2: 2333 } });
+
+        return (
+          <Form
+            form={form}
+            onFinish={values => {
+              expect(values).toBeTruthy();
+              expect(values.username).toBeTruthy();
+              expect(values.path1?.path2).toBeTruthy();
+            }}
+          />
+        );
+      };
+
+      expect(Demo).toBeTruthy();
+    });
+
+    it('ref', () => {
+      class Demo extends React.Component {
+        formRef = React.createRef<FormInstance<FormValues>>();
+
+        componentDidMount() {
+          this.formRef.current?.setFieldsValue({ path1: { path2: 233 } });
+        }
+
+        render() {
+          return (
+            <Form
+              ref={this.formRef}
+              onFinish={values => {
+                expect(values).toBeTruthy();
+                expect(values.username).toBeTruthy();
+                expect(values.path1?.path2).toBeTruthy();
+              }}
+            />
+          );
+        }
+      }
+
+      expect(Demo).toBeTruthy();
+    });
+  });
+
+  it('FormItem renderProps support generic', () => {
+    const Demo = () => (
+      <Form<FormValues>>
+        <Form.Item<FormValues>>
+          {({ getFieldsValue }) => {
+            const values: FormValues = getFieldsValue();
+            expect(values).toBeTruthy();
+            return null;
+          }}
+        </Form.Item>
+      </Form>
+    );
+
+    expect(Demo).toBeTruthy();
   });
 });
-
-// test Form.create on component without own props
-class WithoutOwnProps extends React.Component<any, any> {
-  state = {
-    foo: 'bar',
-  };
-  render() {
-    return <div>foo</div>;
-  }
-}
-
-const WithoutOwnPropsForm = Form.create()(WithoutOwnProps);
-
-<WithoutOwnPropsForm />;
-
-// test Form.create on component with own props
-interface WithOwnPropsProps extends FormComponentProps {
-  name: string;
-}
-
-class WithOwnProps extends React.Component<WithOwnPropsProps, any> {
-  state = {
-    foo: 'bar',
-  };
-
-  render() {
-    return <div>foo</div>;
-  }
-}
-
-const WithOwnPropsForm = Form.create<WithOwnPropsProps>()(WithOwnProps);
-
-<WithOwnPropsForm name="foo" />;
-
-// test Form.create with options
-interface WithCreateOptionsProps extends FormComponentProps {
-  username: string;
-}
-
-class WithCreateOptions extends React.Component<WithCreateOptionsProps, {}> {
-  render() {
-    return <div>foo</div>;
-  }
-}
-
-const mapPropsToFields = (props: WithCreateOptionsProps) => {
-  const { username } = props;
-
-  return {
-    username: Form.createFormField({ value: username }),
-  };
-};
-
-const formOptions: FormCreateOption<WithCreateOptionsProps> = { mapPropsToFields };
-
-const WithCreateOptionsForm = Form.create(formOptions)(WithCreateOptions);
-
-<WithCreateOptionsForm username="foo" />;
-
-// Should work with forwardRef & wrappedComponentRef
-// https://github.com/ant-design/ant-design/issues/16229
-if (React.forwardRef) {
-  interface ForwardProps extends FormComponentProps {
-    str: string;
-  }
-
-  const ForwardDemo = React.forwardRef(({ str }: ForwardProps, ref: React.Ref<HTMLDivElement>) => {
-    return <div ref={ref}>{str || ''}</div>;
-  });
-  const WrappedForwardDemo = Form.create<ForwardProps>()(ForwardDemo);
-  <WrappedForwardDemo str="" />;
-}
-
-interface WrappedRefProps extends FormComponentProps {
-  str: string;
-  test?: () => void;
-}
-class WrapRefDemo extends React.Component<WrappedRefProps> {
-  public getForm() {
-    return this.props.form;
-  }
-  public render() {
-    return <div>{this.props.str || ''}</div>;
-  }
-}
-
-const WrappedWrapRefDemo = Form.create<WrappedRefProps>()(WrapRefDemo);
-<WrappedWrapRefDemo str="" wrappedComponentRef={() => null} />;

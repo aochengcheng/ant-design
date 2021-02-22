@@ -33,71 +33,71 @@ const steps = [
   },
 ];
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 0,
-    };
-  }
+const App = () => {
+  const [current, setCurrent] = React.useState(0);
 
-  next() {
-    const current = this.state.current + 1;
-    this.setState({ current });
-  }
+  const next = () => {
+    setCurrent(current + 1);
+  };
 
-  prev() {
-    const current = this.state.current - 1;
-    this.setState({ current });
-  }
+  const prev = () => {
+    setCurrent(current - 1);
+  };
 
-  render() {
-    const { current } = this.state;
-    return (
-      <div>
-        <Steps current={current}>
-          {steps.map(item => (
-            <Step key={item.title} title={item.title} />
-          ))}
-        </Steps>
-        <div className="steps-content">{steps[current].content}</div>
-        <div className="steps-action">
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => this.next()}>
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button type="primary" onClick={() => message.success('Processing complete!')}>
-              Done
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-              Previous
-            </Button>
-          )}
-        </div>
+  return (
+    <>
+      <Steps current={current}>
+        {steps.map(item => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[current].content}</div>
+      <div className="steps-action">
+        {current < steps.length - 1 && (
+          <Button type="primary" onClick={() => next()}>
+            Next
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button type="primary" onClick={() => message.success('Processing complete!')}>
+            Done
+          </Button>
+        )}
+        {current > 0 && (
+          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+            Previous
+          </Button>
+        )}
       </div>
-    );
-  }
-}
+    </>
+  );
+};
 
 ReactDOM.render(<App />, mountNode);
 ```
 
 ```css
 .steps-content {
-  margin-top: 16px;
-  border: 1px dashed #e9e9e9;
-  border-radius: 6px;
-  background-color: #fafafa;
   min-height: 200px;
-  text-align: center;
+  margin-top: 16px;
   padding-top: 80px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px dashed #e9e9e9;
+  border-radius: 2px;
 }
 
 .steps-action {
   margin-top: 24px;
 }
 ```
+
+<style>
+[data-theme="dark"] .steps-content {
+  margin-top: 16px;
+  border: 1px dashed #303030;
+  background-color: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.65);
+  padding-top: 80px;
+}
+</style>

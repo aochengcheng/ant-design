@@ -16,32 +16,9 @@ Use Drawer to quickly preview details of an object, such as those in a list.
 ```jsx
 import { Drawer, List, Avatar, Divider, Col, Row } from 'antd';
 
-const pStyle = {
-  fontSize: 16,
-  color: 'rgba(0,0,0,0.85)',
-  lineHeight: '24px',
-  display: 'block',
-  marginBottom: 16,
-};
-
 const DescriptionItem = ({ title, content }) => (
-  <div
-    style={{
-      fontSize: 14,
-      lineHeight: '22px',
-      marginBottom: 7,
-      color: 'rgba(0,0,0,0.65)',
-    }}
-  >
-    <p
-      style={{
-        marginRight: 8,
-        display: 'inline-block',
-        color: 'rgba(0,0,0,0.85)',
-      }}
-    >
-      {title}:
-    </p>
+  <div className="site-description-item-profile-wrapper">
+    <p className="site-description-item-profile-p-label">{title}:</p>
     {content}
   </div>
 );
@@ -63,7 +40,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <List
           dataSource={[
             {
@@ -100,8 +77,10 @@ class App extends React.Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <p style={{ ...pStyle, marginBottom: 24 }}>User Profile</p>
-          <p style={pStyle}>Personal</p>
+          <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
+            User Profile
+          </p>
+          <p className="site-description-item-profile-p">Personal</p>
           <Row>
             <Col span={12}>
               <DescriptionItem title="Full Name" content="Lily" />
@@ -135,7 +114,7 @@ class App extends React.Component {
             </Col>
           </Row>
           <Divider />
-          <p style={pStyle}>Company</p>
+          <p className="site-description-item-profile-p">Company</p>
           <Row>
             <Col span={12}>
               <DescriptionItem title="Position" content="Programmer" />
@@ -161,7 +140,7 @@ class App extends React.Component {
             </Col>
           </Row>
           <Divider />
-          <p style={pStyle}>Contacts</p>
+          <p className="site-description-item-profile-p">Contacts</p>
           <Row>
             <Col span={12}>
               <DescriptionItem title="Email" content="AntDesign@example.com" />
@@ -183,10 +162,52 @@ class App extends React.Component {
             </Col>
           </Row>
         </Drawer>
-      </div>
+      </>
     );
   }
 }
 
 ReactDOM.render(<App />, mountNode);
 ```
+
+```css
+.site-description-item-profile-wrapper {
+  margin-bottom: 7px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.5715;
+}
+
+[data-theme='compact'] .site-description-item-profile-wrapper {
+  font-size: 12px;
+  line-height: 1.66667;
+}
+
+.ant-drawer-body p.site-description-item-profile-p {
+  display: block;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  line-height: 1.5715;
+}
+
+[data-theme='compact'] .ant-drawer-body p.site-description-item-profile-p {
+  font-size: 14px;
+  line-height: 1.66667;
+}
+
+.site-description-item-profile-p-label {
+  display: inline-block;
+  margin-right: 8px;
+  color: rgba(0, 0, 0, 0.85);
+}
+```
+
+<style>
+[data-theme="dark"] .site-description-item-profile-p {
+  color: rgba(255,255,255,0.85);
+}
+[data-theme="dark"] .site-description-item-profile-wrapper {
+  color: rgba(255,255,255,0.65);
+}
+</style>

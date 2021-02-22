@@ -1,25 +1,7 @@
-// matchMedia polyfill for
-// https://github.com/WickyNilliams/enquire.js/issues/82
-let enquire: any;
-
-// TODO: Will be removed in antd 4.0 because we will no longer support ie9
-if (typeof window !== 'undefined') {
-  const matchMediaPolyfill = (mediaQuery: string) => {
-    return {
-      media: mediaQuery,
-      matches: false,
-      addListener() {},
-      removeListener() {},
-    };
-  };
-  // ref: https://github.com/ant-design/ant-design/issues/18774
-  if (!window.matchMedia) window.matchMedia = matchMediaPolyfill as any;
-  // eslint-disable-next-line global-require
-  enquire = require('enquire.js');
-}
-
 export type Breakpoint = 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
-export type BreakpointMap = Partial<Record<Breakpoint, string>>;
+export type BreakpointMap = Record<Breakpoint, string>;
+export type ScreenMap = Partial<Record<Breakpoint, boolean>>;
+export type ScreenSizeMap = Partial<Record<Breakpoint, number>>;
 
 export const responsiveArray: Breakpoint[] = ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 
@@ -32,72 +14,60 @@ export const responsiveMap: BreakpointMap = {
   xxl: '(min-width: 1600px)',
 };
 
-type SubscribeFunc = (screens: BreakpointMap) => void;
-
-let subscribers: Array<{
-  token: string;
-  func: SubscribeFunc;
-}> = [];
+type SubscribeFunc = (screens: ScreenMap) => void;
+const subscribers = new Map<Number, SubscribeFunc>();
 let subUid = -1;
 let screens = {};
 
 const responsiveObserve = {
-  dispatch(pointMap: BreakpointMap) {
+  matchHandlers: {} as {
+    [prop: string]: {
+      mql: MediaQueryList;
+      listener: ((this: MediaQueryList, ev: MediaQueryListEvent) => any) | null;
+    };
+  },
+  dispatch(pointMap: ScreenMap) {
     screens = pointMap;
-    if (subscribers.length < 1) {
-      return false;
-    }
-
-    subscribers.forEach(item => {
-      item.func(screens);
-    });
-
-    return true;
+    subscribers.forEach(func => func(screens));
+    return subscribers.size >= 1;
   },
-  subscribe(func: SubscribeFunc) {
-    if (subscribers.length === 0) {
-      this.register();
-    }
-    const token = (++subUid).toString();
-    subscribers.push({
-      token,
-      func,
-    });
+  subscribe(func: SubscribeFunc): number {
+    if (!subscribers.size) this.register();
+    subUid += 1;
+    subscribers.set(subUid, func);
     func(screens);
-    return token;
+    return subUid;
   },
-  unsubscribe(token: string) {
-    subscribers = subscribers.filter(item => item.token !== token);
-    if (subscribers.length === 0) {
-      this.unregister();
-    }
+  unsubscribe(token: number) {
+    subscribers.delete(token);
+    if (!subscribers.size) this.unregister();
   },
   unregister() {
-    Object.keys(responsiveMap).map((screen: Breakpoint) =>
-      enquire.unregister(responsiveMap[screen]),
-    );
+    Object.keys(responsiveMap).forEach((screen: Breakpoint) => {
+      const matchMediaQuery = responsiveMap[screen];
+      const handler = this.matchHandlers[matchMediaQuery];
+      handler?.mql.removeListener(handler?.listener);
+    });
+    subscribers.clear();
   },
   register() {
-    Object.keys(responsiveMap).map((screen: Breakpoint) =>
-      enquire.register(responsiveMap[screen], {
-        match: () => {
-          const pointMap = {
-            ...screens,
-            [screen]: true,
-          };
-          this.dispatch(pointMap);
-        },
-        unmatch: () => {
-          const pointMap = {
-            ...screens,
-            [screen]: false,
-          };
-          this.dispatch(pointMap);
-        },
-        // Keep a empty destory to avoid triggering unmatch when unregister
-        destroy() {},
-      }),
-    );
+    Object.keys(responsiveMap).forEach((screen: Breakpoint) => {
+      const matchMediaQuery = responsiveMap[screen];
+      const listener = ({ matches }: { matches: boolean }) => {
+        this.dispatch({
+          ...screens,
+          [screen]: matches,
+        });
+      };
+      const mql = window.matchMedia(matchMediaQuery);
+      mql.addListener(listener);
+      this.matchHandlers[matchMediaQuery] = {
+        mql,
+        listener,
+      };
+
+      listener(mql);
+    });
   },
 };
 

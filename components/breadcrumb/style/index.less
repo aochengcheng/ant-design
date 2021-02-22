@@ -4,7 +4,7 @@
 @breadcrumb-prefix-cls: ~'@{ant-prefix}-breadcrumb';
 
 .@{breadcrumb-prefix-cls} {
-  .reset-component;
+  .reset-component();
 
   color: @breadcrumb-base-color;
   font-size: @breadcrumb-font-size;
@@ -38,7 +38,8 @@
   }
 
   &-link {
-    > .@{iconfont-css-prefix} + span {
+    > .@{iconfont-css-prefix} + span,
+    > .@{iconfont-css-prefix} + a {
       margin-left: 4px;
     }
   }
@@ -49,3 +50,5 @@
     }
   }
 }
+
+@import './rtl';

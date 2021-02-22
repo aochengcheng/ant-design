@@ -9,13 +9,9 @@ title:
 
 `autoSize` 属性适用于 `textarea` 节点，并且只有高度会自动变化。另外 `autoSize` 可以设定为一个对象，指定最小行数和最大行数。
 
-> `3.24.0` 后 `autosize` 被废弃，请使用 `autoSize`。
-
 ## en-US
 
-`autoSize` prop for a `textarea` type of `Input` makes the height to automatically adjust based on the content. An options object can be provided to `autoSize` to specify the minimum and maximum number of lines the textarea will automatically adjust.
-
-> `autosize` is deprecated after `3.24.0`, please use `autoSize`.
+`autoSize` prop for a `textarea` type of `Input` makes the height to automatically adjust based on the content. An option object can be provided to `autoSize` to specify the minimum and maximum number of lines the textarea will automatically adjust.
 
 ```jsx
 import { Input } from 'antd';
@@ -35,7 +31,7 @@ class Demo extends React.Component {
     const { value } = this.state;
 
     return (
-      <div>
+      <>
         <TextArea placeholder="Autosize height based on content lines" autoSize />
         <div style={{ margin: '24px 0' }} />
         <TextArea
@@ -49,7 +45,7 @@ class Demo extends React.Component {
           placeholder="Controlled autosize"
           autoSize={{ minRows: 3, maxRows: 5 }}
         />
-      </div>
+      </>
     );
   }
 }

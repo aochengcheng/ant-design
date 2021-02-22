@@ -35,7 +35,7 @@ class Demo extends React.Component {
   render() {
     const { rows, longText, copyable, editable, expandable } = this.state;
     return (
-      <div>
+      <>
         <Switch
           checked={longText}
           checkedChildren="Long Text"
@@ -48,18 +48,26 @@ class Demo extends React.Component {
         {longText ? (
           <Paragraph ellipsis={{ rows, expandable }} copyable={copyable} editable={editable}>
             Ant Design, a design language for background applications, is refined by Ant UED Team.
-            This is a nest sample <Text code strong delete>Test</Text> case.
-            Bnt Design, a design language for background applications, is refined by Ant UED Team.
-            Cnt Design, a design language for background applications, is refined by Ant UED Team.
-            Dnt Design, a design language for background applications, is refined by Ant UED Team.
-            Ent Design, a design language for background applications, is refined by Ant UED Team.
+            This is a nest sample{' '}
+            <Text code strong delete>
+              Test
+            </Text>{' '}
+            case. Bnt Design, a design language for background applications, is refined by Ant UED
+            Team. Cnt Design, a design language for background applications, is refined by Ant UED
+            Team. Dnt Design, a design language for background applications, is refined by Ant UED
+            Team. Ent Design, a design language for background applications, is refined by Ant UED
+            Team.
           </Paragraph>
         ) : (
           <Paragraph ellipsis={{ rows, expandable }} copyable={copyable} editable={editable}>
             Hello World
           </Paragraph>
         )}
-      </div>
+
+        <p>
+          2333<Text ellipsis>2333</Text>2333
+        </p>
+      </>
     );
   }
 }

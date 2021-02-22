@@ -2,6 +2,7 @@
 category: Components
 type: Feedback
 title: Popconfirm
+cover: https://gw.alipayobjects.com/zos/alicdn/fjMCD9xRq/Popconfirm.svg
 ---
 
 A simple and compact confirmation dialog of an action.
@@ -14,18 +15,20 @@ The difference with the `confirm` modal dialog is that it's more lightweight tha
 
 ## API
 
-| Param | Description | Type | Default value | Version |
-| --- | --- | --- | --- | --- |
-| cancelText | text of the Cancel button | string | `Cancel` |  |
-| okText | text of the Confirm button | string | `OK` |  |
-| okType | Button `type` of the Confirm button | string | `primary` |  |
-| title | title of the confirmation box | string\|ReactNode | - |  |
-| onCancel | callback of cancel | function(e) | - |  |
-| onConfirm | callback of confirmation | function(e) | - |  |
-| icon | customize icon of confirmation | ReactNode | &lt;Icon type="exclamation-circle" /&gt; | 3.8.0 |
-| disabled | is show popconfirm when click its childrenNode | boolean | false | 3.19.8 |
+| Param | Description | Type | Default value |
+| --- | --- | --- | --- |
+| cancelButtonProps | The cancel button props | [ButtonProps](/components/button/#API) | - |
+| cancelText | The text of the Cancel button | string | `Cancel` |
+| disabled | Whether show popconfirm when click its childrenNode | boolean | false |
+| icon | Customize icon of confirmation | ReactNode | &lt;ExclamationCircle /> |
+| okButtonProps | The ok button props | [ButtonProps](/components/button/#API) | - |
+| okText | The text of the Confirm button | string | `OK` |
+| okType | Button `type` of the Confirm button | string | `primary` |
+| title | The title of the confirmation box | ReactNode \| () => ReactNode | - |
+| onCancel | A callback of cancel | function(e) | - |
+| onConfirm | A callback of confirmation | function(e) | - |
 
-Consult [Tooltip's documentation](https://ant.design/components/tooltip/#API) to find more APIs.
+Consult [Tooltip's documentation](/components/tooltip/#API) to find more APIs.
 
 ## Note
 

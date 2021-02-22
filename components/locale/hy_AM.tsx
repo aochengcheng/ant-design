@@ -1,5 +1,9 @@
-const datePickerLocale = {
+import { Locale } from '../locale-provider';
+import { PickerLocale } from '../date-picker/generatePicker';
+
+const datePickerLocale: PickerLocale = {
   lang: {
+    locale: 'hy-am',
     placeholder: 'Ընտրեք ամսաթիվը',
     rangePlaceholder: ['Մեկնարկի ամսաթիվ', 'Ավարտի ամսաթիվը'],
     today: 'Այսօր',
@@ -34,8 +38,8 @@ const datePickerLocale = {
   },
 };
 
-export default {
-  locale: 'hy',
+const localeValues: Locale = {
+  locale: 'hy-am',
   Pagination: {
     // Options.jsx
     items_per_page: '/ էջ',
@@ -107,3 +111,5 @@ export default {
     back: 'Հետ',
   },
 };
+
+export default localeValues;

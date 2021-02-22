@@ -28,8 +28,8 @@ import {
   Transfer,
   Radio,
 } from 'antd';
-import enUS from 'antd/es/locale/en_US';
-import zhCN from 'antd/es/locale/zh_CN';
+import enUS from 'antd/lib/locale/en_US';
+import zhCN from 'antd/lib/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
@@ -108,7 +108,7 @@ class Page extends React.Component {
         <div className="example">
           <Transfer dataSource={[]} showSearch targetKeys={[]} render={item => item.title} />
         </div>
-        <div style={{ width: 319, border: '1px solid #d9d9d9', borderRadius: 4 }}>
+        <div className="site-config-provider-calendar-wrapper">
           <Calendar fullscreen={false} value={moment()} />
         </div>
         <div className="example">
@@ -169,16 +169,22 @@ ReactDOM.render(<App />, mountNode);
 ```
 
 ```css
-.locale-components {
-  border-top: 1px solid #d9d9d9;
-  padding-top: 16px;
+.site-config-provider-calendar-wrapper {
+  width: 319px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
 }
 
-.example {
+.locale-components {
+  padding-top: 16px;
+  border-top: 1px solid #d9d9d9;
+}
+
+.code-box-demo .example {
   margin: 16px 0;
 }
 
-.example > * {
+.code-box-demo .example > * {
   margin-right: 8px;
 }
 
@@ -186,3 +192,12 @@ ReactDOM.render(<App />, mountNode);
   margin-bottom: 16px;
 }
 ```
+
+<style>
+[data-theme="dark"] .locale-components {
+  border-top: 1px solid #303030;
+}
+[data-theme="dark"] .site-config-provider-calendar-wrapper {
+  border: 1px solid #303030;
+}
+</style>

@@ -14,7 +14,13 @@ title:
 A notification box can appear from the `topRight`, `bottomRight`, `bottomLeft` or `topLeft` of the viewport.
 
 ```jsx
-import { Button, Icon, notification, Divider } from 'antd';
+import { Button, notification, Divider, Space } from 'antd';
+import {
+  RadiusUpleftOutlined,
+  RadiusUprightOutlined,
+  RadiusBottomleftOutlined,
+  RadiusBottomrightOutlined,
+} from '@ant-design/icons';
 
 const openNotification = placement => {
   notification.info({
@@ -27,23 +33,27 @@ const openNotification = placement => {
 
 ReactDOM.render(
   <div>
-    <Button type="primary" onClick={() => openNotification('topLeft')}>
-      <Icon type="radius-upleft" />
-      topLeft
-    </Button>
-    <Button type="primary" onClick={() => openNotification('topRight')}>
-      <Icon type="radius-upright" />
-      topRight
-    </Button>
+    <Space>
+      <Button type="primary" onClick={() => openNotification('topLeft')}>
+        <RadiusUpleftOutlined />
+        topLeft
+      </Button>
+      <Button type="primary" onClick={() => openNotification('topRight')}>
+        <RadiusUprightOutlined />
+        topRight
+      </Button>
+    </Space>
     <Divider />
-    <Button type="primary" onClick={() => openNotification('bottomLeft')}>
-      <Icon type="radius-bottomleft" />
-      bottomLeft
-    </Button>
-    <Button type="primary" onClick={() => openNotification('bottomRight')}>
-      <Icon type="radius-bottomright" />
-      bottomRight
-    </Button>
+    <Space>
+      <Button type="primary" onClick={() => openNotification('bottomLeft')}>
+        <RadiusBottomleftOutlined />
+        bottomLeft
+      </Button>
+      <Button type="primary" onClick={() => openNotification('bottomRight')}>
+        <RadiusBottomrightOutlined />
+        bottomRight
+      </Button>
+    </Space>
   </div>,
   mountNode,
 );

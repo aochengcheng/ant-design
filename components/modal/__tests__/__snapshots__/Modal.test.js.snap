@@ -2,27 +2,30 @@
 
 exports[`Modal render correctly 1`] = `
 <div>
-  <div>
+  <div
+    class="ant-scrolling-effect"
+    style="width: calc(100% - 0px); overflow: hidden; overflow-x: hidden; overflow-y: hidden;"
+  >
     <div>
       <div
         class="ant-modal-root"
       >
         <div
-          class="ant-modal-mask fade-appear"
+          class="ant-modal-mask ant-fade-appear ant-fade-appear-start ant-fade"
         />
         <div
-          class="ant-modal-wrap "
+          class="ant-modal-wrap"
           role="dialog"
           tabindex="-1"
         >
           <div
-            class="ant-modal zoom-appear"
+            class="ant-modal ant-zoom-appear ant-zoom-appear-prepare ant-zoom"
             role="document"
             style="width: 520px;"
           >
             <div
               aria-hidden="true"
-              style="width: 0px; height: 0px; overflow: hidden;"
+              style="width: 0px; height: 0px; overflow: hidden; outline: none;"
               tabindex="0"
             />
             <div
@@ -36,13 +39,13 @@ exports[`Modal render correctly 1`] = `
                 <span
                   class="ant-modal-close-x"
                 >
-                  <i
-                    aria-label="icon: close"
+                  <span
+                    aria-label="close"
                     class="anticon anticon-close ant-modal-close-icon"
+                    role="img"
                   >
                     <svg
                       aria-hidden="true"
-                      class=""
                       data-icon="close"
                       fill="currentColor"
                       focusable="false"
@@ -51,10 +54,10 @@ exports[`Modal render correctly 1`] = `
                       width="1em"
                     >
                       <path
-                        d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                        d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
                       />
                     </svg>
-                  </i>
+                  </span>
                 </span>
               </button>
               <div
@@ -65,29 +68,27 @@ exports[`Modal render correctly 1`] = `
               <div
                 class="ant-modal-footer"
               >
-                <div>
-                  <button
-                    class="ant-btn"
-                    type="button"
-                  >
-                    <span>
-                      Cancel
-                    </span>
-                  </button>
-                  <button
-                    class="ant-btn ant-btn-primary"
-                    type="button"
-                  >
-                    <span>
-                      OK
-                    </span>
-                  </button>
-                </div>
+                <button
+                  class="ant-btn"
+                  type="button"
+                >
+                  <span>
+                    Cancel
+                  </span>
+                </button>
+                <button
+                  class="ant-btn ant-btn-primary"
+                  type="button"
+                >
+                  <span>
+                    OK
+                  </span>
+                </button>
               </div>
             </div>
             <div
               aria-hidden="true"
-              style="width: 0px; height: 0px; overflow: hidden;"
+              style="width: 0px; height: 0px; overflow: hidden; outline: none;"
               tabindex="0"
             />
           </div>
@@ -100,27 +101,30 @@ exports[`Modal render correctly 1`] = `
 
 exports[`Modal render without footer 1`] = `
 <div>
-  <div>
+  <div
+    class="ant-scrolling-effect"
+    style="width: calc(100% - 0px); overflow: hidden; overflow-x: hidden; overflow-y: hidden;"
+  >
     <div>
       <div
         class="ant-modal-root"
       >
         <div
-          class="ant-modal-mask fade-appear"
+          class="ant-modal-mask ant-fade-appear ant-fade-appear-start ant-fade"
         />
         <div
-          class="ant-modal-wrap "
+          class="ant-modal-wrap"
           role="dialog"
           tabindex="-1"
         >
           <div
-            class="ant-modal zoom-appear"
+            class="ant-modal ant-zoom-appear ant-zoom-appear-prepare ant-zoom"
             role="document"
             style="width: 520px;"
           >
             <div
               aria-hidden="true"
-              style="width: 0px; height: 0px; overflow: hidden;"
+              style="width: 0px; height: 0px; overflow: hidden; outline: none;"
               tabindex="0"
             />
             <div
@@ -134,13 +138,13 @@ exports[`Modal render without footer 1`] = `
                 <span
                   class="ant-modal-close-x"
                 >
-                  <i
-                    aria-label="icon: close"
+                  <span
+                    aria-label="close"
                     class="anticon anticon-close ant-modal-close-icon"
+                    role="img"
                   >
                     <svg
                       aria-hidden="true"
-                      class=""
                       data-icon="close"
                       fill="currentColor"
                       focusable="false"
@@ -149,10 +153,10 @@ exports[`Modal render without footer 1`] = `
                       width="1em"
                     >
                       <path
-                        d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                        d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
                       />
                     </svg>
-                  </i>
+                  </span>
                 </span>
               </button>
               <div
@@ -163,7 +167,7 @@ exports[`Modal render without footer 1`] = `
             </div>
             <div
               aria-hidden="true"
-              style="width: 0px; height: 0px; overflow: hidden;"
+              style="width: 0px; height: 0px; overflow: hidden; outline: none;"
               tabindex="0"
             />
           </div>
@@ -174,26 +178,28 @@ exports[`Modal render without footer 1`] = `
 </div>
 `;
 
+exports[`Modal rtl render component should be rendered correctly in RTL direction 1`] = `null`;
+
 exports[`Modal support closeIcon 1`] = `
 <div
   class="ant-modal-root"
 >
   <div
-    class="ant-modal-mask fade-appear"
+    class="ant-modal-mask ant-fade-appear ant-fade-appear-start ant-fade"
   />
   <div
-    class="ant-modal-wrap "
+    class="ant-modal-wrap"
     role="dialog"
     tabindex="-1"
   >
     <div
-      class="ant-modal zoom-appear"
+      class="ant-modal ant-zoom-appear ant-zoom-appear-prepare ant-zoom"
       role="document"
       style="width: 520px;"
     >
       <div
         aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden;"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />
       <div
@@ -218,29 +224,27 @@ exports[`Modal support closeIcon 1`] = `
         <div
           class="ant-modal-footer"
         >
-          <div>
-            <button
-              class="ant-btn"
-              type="button"
-            >
-              <span>
-                Cancel
-              </span>
-            </button>
-            <button
-              class="ant-btn ant-btn-primary"
-              type="button"
-            >
-              <span>
-                OK
-              </span>
-            </button>
-          </div>
+          <button
+            class="ant-btn"
+            type="button"
+          >
+            <span>
+              Cancel
+            </span>
+          </button>
+          <button
+            class="ant-btn ant-btn-primary"
+            type="button"
+          >
+            <span>
+              OK
+            </span>
+          </button>
         </div>
       </div>
       <div
         aria-hidden="true"
-        style="width: 0px; height: 0px; overflow: hidden;"
+        style="width: 0px; height: 0px; overflow: hidden; outline: none;"
         tabindex="0"
       />
     </div>

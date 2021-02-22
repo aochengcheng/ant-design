@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 8
 title:
   en-US: Reset filters and sorters
   zh-CN: 可控的筛选和排序
@@ -22,7 +22,7 @@ Control filters and sorters by `filteredValue` and `sortOrder`.
 > 3. `column.key` is required.
 
 ```jsx
-import { Table, Button } from 'antd';
+import { Table, Button, Space } from 'antd';
 
 const data = [
   {
@@ -94,7 +94,10 @@ class App extends React.Component {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        filters: [{ text: 'Joe', value: 'Joe' }, { text: 'Jim', value: 'Jim' }],
+        filters: [
+          { text: 'Joe', value: 'Joe' },
+          { text: 'Jim', value: 'Jim' },
+        ],
         filteredValue: filteredInfo.name || null,
         onFilter: (value, record) => record.name.includes(value),
         sorter: (a, b) => a.name.length - b.name.length,
@@ -113,7 +116,10 @@ class App extends React.Component {
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
-        filters: [{ text: 'London', value: 'London' }, { text: 'New York', value: 'New York' }],
+        filters: [
+          { text: 'London', value: 'London' },
+          { text: 'New York', value: 'New York' },
+        ],
         filteredValue: filteredInfo.address || null,
         onFilter: (value, record) => record.address.includes(value),
         sorter: (a, b) => a.address.length - b.address.length,
@@ -122,27 +128,17 @@ class App extends React.Component {
       },
     ];
     return (
-      <div>
-        <div className="table-operations">
+      <>
+        <Space style={{ marginBottom: 16 }}>
           <Button onClick={this.setAgeSort}>Sort age</Button>
           <Button onClick={this.clearFilters}>Clear filters</Button>
           <Button onClick={this.clearAll}>Clear filters and sorters</Button>
-        </div>
+        </Space>
         <Table columns={columns} dataSource={data} onChange={this.handleChange} />
-      </div>
+      </>
     );
   }
 }
 
 ReactDOM.render(<App />, mountNode);
-```
-
-```css
-.table-operations {
-  margin-bottom: 16px;
-}
-
-.table-operations > button {
-  margin-right: 8px;
-}
 ```

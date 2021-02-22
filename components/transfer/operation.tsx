@@ -1,5 +1,8 @@
 import * as React from 'react';
+import LeftOutlined from '@ant-design/icons/LeftOutlined';
+import RightOutlined from '@ant-design/icons/RightOutlined';
 import Button from '../button';
+import { DirectionType } from '../config-provider';
 
 export interface TransferOperationProps {
   className?: string;
@@ -11,6 +14,8 @@ export interface TransferOperationProps {
   rightActive?: boolean;
   style?: React.CSSProperties;
   disabled?: boolean;
+  direction?: DirectionType;
+  oneWay?: boolean;
 }
 
 const Operation = ({
@@ -23,6 +28,8 @@ const Operation = ({
   rightActive,
   className,
   style,
+  direction,
+  oneWay,
 }: TransferOperationProps) => (
   <div className={className} style={style}>
     <Button
@@ -30,19 +37,21 @@ const Operation = ({
       size="small"
       disabled={disabled || !rightActive}
       onClick={moveToRight}
-      icon="right"
+      icon={direction !== 'rtl' ? <RightOutlined /> : <LeftOutlined />}
     >
       {rightArrowText}
     </Button>
-    <Button
-      type="primary"
-      size="small"
-      disabled={disabled || !leftActive}
-      onClick={moveToLeft}
-      icon="left"
-    >
-      {leftArrowText}
-    </Button>
+    {!oneWay && (
+      <Button
+        type="primary"
+        size="small"
+        disabled={disabled || !leftActive}
+        onClick={moveToLeft}
+        icon={direction !== 'rtl' ? <LeftOutlined /> : <RightOutlined />}
+      >
+        {leftArrowText}
+      </Button>
+    )}
   </div>
 );
 

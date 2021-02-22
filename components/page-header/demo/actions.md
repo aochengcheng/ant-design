@@ -17,11 +17,9 @@ Use the operating area and customize the sub-nodes, suitable for use in the need
 import { PageHeader, Tag, Button, Statistic, Descriptions, Row } from 'antd';
 
 ReactDOM.render(
-  <div>
+  <>
     <PageHeader
-      style={{
-        border: '1px solid rgb(235, 237, 240)',
-      }}
+      className="site-page-header"
       onBack={() => window.history.back()}
       title="Title"
       subTitle="This is a subtitle"
@@ -59,7 +57,7 @@ ReactDOM.render(
         </Button>,
       ]}
     >
-      <Row type="flex">
+      <Row>
         <Statistic title="Status" value="Pending" />
         <Statistic
           title="Price"
@@ -72,7 +70,7 @@ ReactDOM.render(
         <Statistic title="Balance" prefix="$" value={3345.08} />
       </Row>
     </PageHeader>
-  </div>,
+  </>,
   mountNode,
 );
 ```
